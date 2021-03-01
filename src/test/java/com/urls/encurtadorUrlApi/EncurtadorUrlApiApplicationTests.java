@@ -17,6 +17,6 @@ class EncurtadorUrlApiApplicationTests {
             String urlAleatoria = Randomizador.randomStr();
             if(urlAleatoria != null && urlAleatoria.length() >= 5 && urlAleatoria.length() <= 10)
                 System.out.println(EditorTexto.editaOutputTeste(1, "Randomizador de URL", "O randomizador parece OK. O valor aleatório é: ", urlAleatoria));            
-        }
+        }                
 
 }

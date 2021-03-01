@@ -1,5 +1,6 @@
 package com.urls.encurtadorUrlApi.models;
 
+import com.urls.encurtadorUrlApi.util.CalculaDatas;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -18,13 +19,15 @@ import javax.persistence.Table;
 public class Url implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    private static final Date dataHoraAgora = new Date();
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String urlEncurtada;
     private String urlReal;
-    private Timestamp dataHoraCriacao = new Timestamp(new Date().getTime());
+    private Timestamp dataHoraCriacao = new Timestamp(dataHoraAgora.getTime());
+    private Timestamp dataHoraExpiracao = new Timestamp(CalculaDatas.calculaDataHoraExpiracao(dataHoraAgora).getTime());
     
 
     //Getters & setters
@@ -58,6 +61,14 @@ public class Url implements Serializable {
 
     public void setDataHoraCriacao(Timestamp dataHoraCriacao) {
         this.dataHoraCriacao = dataHoraCriacao;
-    }        
+    }
+
+    public Timestamp getDataHoraExpiracao() {
+        return dataHoraExpiracao;
+    }
+
+    public void setDataHoraExpiracao(Timestamp dataHoraExpiracao) {
+        this.dataHoraExpiracao = dataHoraExpiracao;
+    }
     
 }

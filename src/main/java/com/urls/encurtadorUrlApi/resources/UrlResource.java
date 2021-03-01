@@ -7,6 +7,7 @@ package com.urls.encurtadorUrlApi.resources;
 
 import com.urls.encurtadorUrlApi.models.Url;
 import com.urls.encurtadorUrlApi.repository.UrlRepository;
+import com.urls.encurtadorUrlApi.util.CalculaDatas;
 import com.urls.encurtadorUrlApi.util.Randomizador;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +43,12 @@ public class UrlResource {
         return urlRepository1.findAll();
     }
     
+    @GetMapping("/nao_expiradas")
+    @ApiOperation(value = "Exibe a lista de URL's que não ultrapassaram o prazo de expiração")
+    public List<Url>listaUrlsNaoExpiradas(){
+        return urlRepository1.naoExpiradas();
+    }
+    
     @GetMapping("/url_id/{id}")
     @ApiOperation(value = "Retorna o objeto URL correspondente ao id")
     public Url consultaUrlPorId(@PathVariable(value = "id") long id){
@@ -71,7 +78,10 @@ public class UrlResource {
     @ApiOperation(value = "Alterar a url encurtada que perdeu sua validade")
     public Url sobrescreveUrl(@RequestBody Url url1){
         url1.setUrlEncurtada(Randomizador.randomStr());
-        url1.setDataHoraCriacao(new Timestamp(new Date().getTime()));
+        Date dataHoraAgora = new Date();
+        url1.setDataHoraCriacao(new Timestamp(dataHoraAgora.getTime()));
+        Date novaDataHoraExpiracao = CalculaDatas.calculaDataHoraExpiracao(dataHoraAgora);
+        url1.setDataHoraExpiracao(new Timestamp(novaDataHoraExpiracao.getTime()));
         return urlRepository1.save(url1);
     }
 }
