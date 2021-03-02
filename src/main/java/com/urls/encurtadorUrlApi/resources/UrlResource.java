@@ -70,6 +70,10 @@ public class UrlResource {
     @PostMapping("/encurtar")
     @ApiOperation(value = "Cria uma URL encurtada a partir da url real enviada no corpo do POST")
     public Url insereUrl(@RequestBody Url url1){
+        Date dataHoraAgora = new Date();
+        url1.setDataHoraCriacao(new Timestamp(dataHoraAgora.getTime()));
+        Date novaDataHoraExpiracao = CalculaDatas.calculaDataHoraExpiracao(dataHoraAgora);
+        url1.setDataHoraExpiracao(new Timestamp(novaDataHoraExpiracao.getTime()));
         url1.setUrlEncurtada(Randomizador.randomStr());
         return urlRepository1.save(url1);
     }

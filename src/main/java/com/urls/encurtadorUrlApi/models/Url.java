@@ -26,10 +26,14 @@ public class Url implements Serializable {
     private long id;
     private String urlEncurtada;
     private String urlReal;
-    private Timestamp dataHoraCriacao = new Timestamp(dataHoraAgora.getTime());
-    private Timestamp dataHoraExpiracao = new Timestamp(CalculaDatas.calculaDataHoraExpiracao(dataHoraAgora).getTime());
-    
+    private Timestamp dataHoraCriacao;
+    private Timestamp dataHoraExpiracao;
 
+    public Url() {
+        this.dataHoraCriacao = new Timestamp(dataHoraAgora.getTime());
+        this.dataHoraExpiracao = new Timestamp(CalculaDatas.calculaDataHoraExpiracao(dataHoraAgora).getTime());
+    }
+    
     //Getters & setters
     public long getId() {
         return id;
